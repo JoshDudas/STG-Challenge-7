@@ -23,12 +23,9 @@ class TestAutomatedChromeBrowser(unittest.TestCase):
         while i < len(popular_items_matrix[0]):
             try:
                 self.driver.get(popular_items_matrix[1][i])
-                print("{}'s link {} is working".format(str(popular_items_matrix[0][i]).upper(),
-                                                               str(popular_items_matrix[1][i]).upper()))
-                i += 1
-            except TimeoutError as te_error:
+                driverwait.until(expected_conditions.visibility_of_element_located((By.XPATH, '//img[@alt="Copart"]')))
+            except TimeoutError:
                 print("ERROR: {}'s link ({}) timed out".format(str(popular_items_matrix[0][i]).upper(), str(popular_items_matrix[1][i]).upper()))
-                print(te_error)
             i += 1
 
     def tearDown(self):
