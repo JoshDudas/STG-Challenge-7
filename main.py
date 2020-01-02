@@ -1,8 +1,10 @@
 import unittest
+import requests
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
+from WebpageLinks import ValidateLinks
 
 class TestAutomatedChromeBrowser(unittest.TestCase):
     def setUp(self):
@@ -20,11 +22,6 @@ class TestAutomatedChromeBrowser(unittest.TestCase):
         popular_items_list = self.driver.find_elements(By.XPATH, '//*[@id="tabTrending"]//a')
         return popular_items_list
 
-    def create_popular_items_matrix(self, popular_items_list):
-        for item in popular_items_list:
-            self._popular_items_matrix[0].append(item.text)
-            self._popular_items_matrix[1].append(item.get_attribute('href'))
-
     def check_each_popular_item_link(self):
         i = 0
         while i < len(self._popular_items_matrix[0]):
@@ -37,10 +34,14 @@ class TestAutomatedChromeBrowser(unittest.TestCase):
             i += 1
 
     def test_get_Popular_Searches_Items_and_Urls(self):
+        copart_links = ValidateLinks()
         self.open_webpage()
         self.wait_for_page_to_load()
-        self.create_popular_items_matrix(self.get_popular_items())
-        self.check_each_popular_item_link()
+        copart_links.store_link_text_and_url(self.get_popular_items())
+        element = '//*[@src="/images/icons/loader.gif"]'
+        wait_elements = []
+        wait_elements.append(element)
+        copart_links.validate_urls('//*[contains(@alt, "Copart")]', wait_elements)
 
     def tearDown(self):
         self.driver.close()
