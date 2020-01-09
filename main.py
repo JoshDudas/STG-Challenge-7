@@ -34,7 +34,7 @@ class TestAutomatedChromeBrowser(unittest.TestCase):
             i += 1
 
     def test_get_Popular_Searches_Items_and_Urls(self):
-        copart_links = ValidateLinks()
+        copart_links = ValidateLinks(self.driver)
         self.open_webpage()
         self.wait_for_page_to_load()
         copart_links.store_link_text_and_url(self.get_popular_items())

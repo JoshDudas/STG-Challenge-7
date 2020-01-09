@@ -6,8 +6,8 @@ from selenium.common.exceptions import WebDriverException
 
 
 class ValidateLinks:
-    def __init__(self):
-        self._driver = webdriver.Chrome('./chromedriver')
+    def __init__(self, driver):
+        self._driver = driver
         self._driver_wait = WebDriverWait(self._driver, 10)
         self._wait_elements = []
         self._links_matrix = {'display_text': '', 'link_url': ''}
