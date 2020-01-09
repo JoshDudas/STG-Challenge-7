@@ -22,16 +22,17 @@ class TestAutomatedChromeBrowser(unittest.TestCase):
         popular_items_list = self.driver.find_elements(By.XPATH, '//*[@id="tabTrending"]//a')
         return popular_items_list
 
-    def check_each_popular_item_link(self):
-        i = 0
-        while i < len(self._popular_items_matrix[0]):
-            try:
-                self.driver.get(self._popular_items_matrix[1][i])
-                self.driver_wait.until(expected_conditions.visibility_of_element_located((By.XPATH, '//img[@alt="Copart"]')))
-            except TimeoutError:
-                print("ERROR: {}'s link ({}) timed out".format(str(self._popular_items_matrix[0][i]).upper(),
-                                                               str(self._popular_items_matrix[1][i]).upper()))
-            i += 1
+    # No longer in use as the validation was moved to a different class
+    # def check_each_popular_item_link(self):
+    #     i = 0
+    #     while i < len(self._popular_items_matrix[0]):
+    #         try:
+    #             self.driver.get(self._popular_items_matrix[1][i])
+    #             self.driver_wait.until(expected_conditions.visibility_of_element_located((By.XPATH, '//img[@alt="Copart"]')))
+    #         except TimeoutError:
+    #             print("ERROR: {}'s link ({}) timed out".format(str(self._popular_items_matrix[0][i]).upper(),
+    #                                                            str(self._popular_items_matrix[1][i]).upper()))
+    #         i += 1
 
     def test_get_Popular_Searches_Items_and_Urls(self):
         copart_links = ValidateLinks(self.driver)
